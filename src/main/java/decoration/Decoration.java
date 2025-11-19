@@ -9,6 +9,19 @@ public class Decoration {
     private int roomId;
 
     public Decoration(String name, String material, double value, int roomId) {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid name");
+        }
+
+        if (material == null) {
+            throw new IllegalArgumentException("Invalid material");
+        }
+
+        if (value >= 0) {
+            throw new IllegalArgumentException("Invalid value");
+        }
+
         this.name = name;
         this.material = material;
         this.value = value;
