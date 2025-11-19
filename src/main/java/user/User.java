@@ -17,8 +17,8 @@ public class User {
             throw new IllegalArgumentException("Invalid surname(s)");
         }
 
-        if (email == null || email.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid surname(s)");
+        if (email == null || email.trim().isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$")) {
+            throw new IllegalArgumentException("Invalid email");
         }
 
         this.name = name;
