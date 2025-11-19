@@ -42,20 +42,4 @@ public class Room {
     public void setEscapeRoomId(int escapeRoomId) {
         this.escapeRoomId = escapeRoomId;
     }
-
-    public void addHint() {
-
-    }
-
-    public void removeHint(int id) {
-
-    }
-
-    public void addDecoration() {
-
-    }
-
-    public void removeDecoration(int id) {
-
-    }
 }
