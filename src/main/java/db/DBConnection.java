@@ -10,6 +10,8 @@ import java.util.Properties;
 
 public class DBConnection {
 
+    private static DBConnection instance;
+
     private static final String PROPERTIES_FILE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "db.properties";
 
     private static String dbUrl;
@@ -39,5 +41,12 @@ public class DBConnection {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+    }
+
+    private static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
+        return instance;
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
 
 
-
     @Override
     public EscapeRoom findById(int id) {
         String sql =  "SELECT id, name FROM escape_room WHERE id = ?";
