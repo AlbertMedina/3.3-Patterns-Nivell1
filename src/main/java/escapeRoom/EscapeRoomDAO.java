@@ -9,11 +9,15 @@ import java.util.List;
 
 public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
 
+    private final Connection connection;
 
+    public EscapeRoomDAO() {
+        this.connection = DBConnection.getInstance().getConnection();
+    }
     @Override
     public EscapeRoom findById(int id) {
         String sql =  "SELECT id, name FROM escape_room WHERE id = ?";
-        try(Connection connection = DBConnection.getConnection()) {
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1,id);
             ResultSet result = ps.executeQuery();
@@ -34,7 +38,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     public List<EscapeRoom> findAll() {
         List<EscapeRoom> escapeRoomList = new ArrayList<>();
         String sql = "SELECT id, name FROM escape_room";
-        try (Connection connection = DBConnection.getConnection()) {
+        try {
             Statement stmt = connection.createStatement();
             ResultSet result = stmt.executeQuery(sql);
 
@@ -54,7 +58,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     @Override
     public boolean insert(EscapeRoom element) {
         String sql = "INSERT INTO escape_room (id, name) VALUES (?, ?)";
-        try (Connection connection = DBConnection.getConnection()) {
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1,element.getId());
             ps.setString(2,element.getName());
@@ -69,7 +73,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     @Override
     public boolean update(EscapeRoom element) {
         String sql =   "UPDATE escape_room SET name = ? WHERE id = ?";
-        try (Connection connection = DBConnection.getConnection()) {
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, element.getName());
             ps.setInt(2,element.getId());
@@ -84,7 +88,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     @Override
     public boolean delete(int id) {
         String sql = "DELETE FROM escape_room WHERE id = ?";
-        try (Connection connection = DBConnection.getConnection()) {
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
 

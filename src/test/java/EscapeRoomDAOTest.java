@@ -12,9 +12,6 @@ public class EscapeRoomDAOTest {
 
     @BeforeAll
     static void setUpDatabase() throws SQLException {
-        connection = DBConnection.getConnection();
-        dao = new EscapeRoomDAO(connection);
-
 
     }
 }
