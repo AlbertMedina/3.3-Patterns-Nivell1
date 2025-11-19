@@ -78,7 +78,7 @@ public class TicketDao implements GenericDao<Ticket> {
 
     @Override
     public boolean update(Ticket element) {
-        String sql = "UPDATE ticket SET name = ?, material = ?, value = ?, room_id = ? WHERE id = ?";
+        String sql = "UPDATE ticket SET date = ?, price = ?, room_id = ?, user_id = ? WHERE id = ?";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
