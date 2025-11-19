@@ -20,9 +20,8 @@ public class RoomDao implements GenericDao<Room> {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"));
+                room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"), rs.getInt("escape_room_id"));
                 room.setId(rs.getInt("id"));
-                room.setEscapeRoomId(rs.getInt("escape_room_id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -41,9 +40,8 @@ public class RoomDao implements GenericDao<Room> {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Room room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"));
+                Room room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"), rs.getInt("escape_room_id"));
                 room.setId(rs.getInt("id"));
-                room.setEscapeRoomId(rs.getInt("escape_room_id"));
                 rooms.add(room);
             }
         } catch (SQLException e) {

@@ -3,16 +3,16 @@ package room;
 public class Room {
 
     private int id;
+    private String name;
+    private Difficulty difficulty;
+    private double price;
     private int escapeRoomId;
 
-    private final String name;
-    private final Difficulty difficulty;
-    private final double price;
-
-    public Room(String name, Difficulty difficulty, double price) {
+    public Room(String name, Difficulty difficulty, double price, int escapeRoomId) {
         this.name = name;
         this.difficulty = difficulty;
         this.price = price;
+        this.escapeRoomId = escapeRoomId;
     }
 
     public int getId() {
@@ -27,12 +27,24 @@ public class Room {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getEscapeRoomId() {
