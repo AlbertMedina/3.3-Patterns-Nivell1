@@ -13,7 +13,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public Decoration findById(int id) {
         String sqlQuery = "SELECT * FROM decoration WHERE id = ?";
         Decoration decoration = null;
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
@@ -35,7 +35,7 @@ public class DecorationDao implements GenericDao<Decoration> {
 
         List<Decoration> decorations = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery);
              ResultSet rs = ps.executeQuery()) {
 
@@ -53,7 +53,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     @Override
     public boolean insert(Decoration element) {
         String sql = "INSERT INTO decoration (name, material, value, room_id) VALUES (?, ?, ?, ?)";
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -80,7 +80,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public boolean update(Decoration element) {
         String sql = "UPDATE decoration SET name = ?, material = ?, value = ?, room_id = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -101,7 +101,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public boolean delete(int id) {
         String sqlQuery = "DELETE FROM decoration WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
