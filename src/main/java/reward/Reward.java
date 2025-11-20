@@ -1,18 +1,17 @@
 package reward;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Reward {
 
     private int id;
     private String name;
     private String description;
-    private LocalDateTime date;
+    private LocalDate date;
     private int userId;
 
 
-    public Reward(int id, String name, String description, LocalDateTime date, int userId) {
-        this.id = id;
+    public Reward(String name, String description, LocalDate date, int userId) {
 
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Name cannot be null or empty");
@@ -29,10 +28,6 @@ public class Reward {
         this.userId = userId;
     }
 
-    public Reward(String name, String description, LocalDateTime date, int userId) {
-        this(0, name, description, date, userId);
-    }
-
     public int getId() {
         return id;
     }
@@ -45,7 +40,7 @@ public class Reward {
         return description;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -70,7 +65,7 @@ public class Reward {
         this.description = description;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         if (date == null)
             throw new IllegalArgumentException("Date cannot be null");
         this.date = date;
