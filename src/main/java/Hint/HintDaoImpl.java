@@ -16,7 +16,6 @@ public class HintDaoImpl implements GenericDao<Hint> {
 
     private Hint map(ResultSet resultSet) throws SQLException {
         return new Hint(
-                resultSet.getInt("id"),
                 resultSet.getString("text"),
                 resultSet.getString("theme"),
                 resultSet.getDouble("value"),

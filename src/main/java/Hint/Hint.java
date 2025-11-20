@@ -8,8 +8,7 @@ public class Hint {
     private double value;
     private int roomId;
 
-    public Hint(int id, String text, String theme, double value, int roomId) {
-        this.id = id;
+    public Hint(String text, String theme, double value, int roomId) {
 
         if (text == null || text.isEmpty()) {
             throw new IllegalArgumentException("Text can not be null or empty");
@@ -26,9 +25,6 @@ public class Hint {
         this.roomId = roomId;
     }
 
-    public Hint(String text, String theme, double value, int roomId) {
-        this(0, text, theme, value, roomId);
-    }
 
 
     public int getId() {
