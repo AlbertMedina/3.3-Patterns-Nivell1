@@ -15,7 +15,7 @@ public class CertificationDao implements GenericDao<Certification> {
 
         Certification certification = null;
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -38,7 +38,7 @@ public class CertificationDao implements GenericDao<Certification> {
 
         List<Certification> certifications = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -58,7 +58,7 @@ public class CertificationDao implements GenericDao<Certification> {
     public boolean insert(Certification element) {
         String sql = "INSERT INTO certification (name, date, room_id, user_id) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -86,7 +86,7 @@ public class CertificationDao implements GenericDao<Certification> {
     public boolean update(Certification element) {
         String sql = "UPDATE certification SET name = ?, date = ?, room_id = ?, user_id = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -108,7 +108,7 @@ public class CertificationDao implements GenericDao<Certification> {
     public boolean delete(int id) {
         String sql = "DELETE FROM certification WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -120,5 +120,9 @@ public class CertificationDao implements GenericDao<Certification> {
         }
 
         return false;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DBConnection.getInstance().getConnection();
     }
 }

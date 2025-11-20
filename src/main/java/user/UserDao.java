@@ -15,7 +15,7 @@ public class UserDao implements GenericDao<User> {
 
         User user = null;
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -38,7 +38,7 @@ public class UserDao implements GenericDao<User> {
 
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -58,7 +58,7 @@ public class UserDao implements GenericDao<User> {
     public boolean insert(User element) {
         String sql = "INSERT INTO user (name, surnames, email) VALUES (?, ?, ?)";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -85,7 +85,7 @@ public class UserDao implements GenericDao<User> {
     public boolean update(User element) {
         String sql = "UPDATE user SET name = ?, surnames = ?, email = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -106,7 +106,7 @@ public class UserDao implements GenericDao<User> {
     public boolean delete(int id) {
         String sql = "DELETE FROM user WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -118,5 +118,9 @@ public class UserDao implements GenericDao<User> {
         }
 
         return false;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DBConnection.getInstance().getConnection();
     }
 }

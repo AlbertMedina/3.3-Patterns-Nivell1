@@ -15,7 +15,7 @@ public class TicketDao implements GenericDao<Ticket> {
 
         Ticket ticket = null;
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -38,7 +38,7 @@ public class TicketDao implements GenericDao<Ticket> {
 
         List<Ticket> tickets = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -58,7 +58,7 @@ public class TicketDao implements GenericDao<Ticket> {
     public boolean insert(Ticket element) {
         String sql = "INSERT INTO ticket (date, price, room_id, user_id) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDate(1, Date.valueOf(element.getDate()));
@@ -86,7 +86,7 @@ public class TicketDao implements GenericDao<Ticket> {
     public boolean update(Ticket element) {
         String sql = "UPDATE ticket SET date = ?, price = ?, room_id = ?, user_id = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setDate(1, Date.valueOf(element.getDate()));
@@ -108,7 +108,7 @@ public class TicketDao implements GenericDao<Ticket> {
     public boolean delete(int id) {
         String sql = "DELETE FROM ticket WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -120,5 +120,9 @@ public class TicketDao implements GenericDao<Ticket> {
         }
 
         return false;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DBConnection.getInstance().getConnection();
     }
 }

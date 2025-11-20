@@ -15,7 +15,7 @@ public class DecorationDao implements GenericDao<Decoration> {
 
         Decoration decoration = null;
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -38,7 +38,7 @@ public class DecorationDao implements GenericDao<Decoration> {
 
         List<Decoration> decorations = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -58,7 +58,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public boolean insert(Decoration element) {
         String sql = "INSERT INTO decoration (name, material, value, room_id) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -86,7 +86,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public boolean update(Decoration element) {
         String sql = "UPDATE decoration SET name = ?, material = ?, value = ?, room_id = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -108,7 +108,7 @@ public class DecorationDao implements GenericDao<Decoration> {
     public boolean delete(int id) {
         String sql = "DELETE FROM decoration WHERE id = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -120,5 +120,9 @@ public class DecorationDao implements GenericDao<Decoration> {
         }
 
         return false;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DBConnection.getInstance().getConnection();
     }
 }
