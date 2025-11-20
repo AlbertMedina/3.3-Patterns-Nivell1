@@ -18,7 +18,7 @@ public class Room {
             throw new IllegalArgumentException("Invalid difficulty");
         }
 
-        if (price >= 0) {
+        if (price <= 0) {
             throw new IllegalArgumentException("Invalid price");
         }
 
@@ -37,6 +37,9 @@ public class Room {
     }
 
     public String getName() {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid name");
+        }
         return name;
     }
 
@@ -49,6 +52,9 @@ public class Room {
     }
 
     public void setDifficulty(Difficulty difficulty) {
+        if (difficulty == null) {
+            throw new IllegalArgumentException("Invalid difficulty");
+        }
         this.difficulty = difficulty;
     }
 
@@ -57,6 +63,9 @@ public class Room {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Invalid price");
+        }
         this.price = price;
     }
 

@@ -18,7 +18,7 @@ public class Decoration {
             throw new IllegalArgumentException("Invalid material");
         }
 
-        if (value >= 0) {
+        if (value <= 0) {
             throw new IllegalArgumentException("Invalid value");
         }
 
@@ -41,6 +41,9 @@ public class Decoration {
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid name");
+        }
         this.name = name;
     }
 
@@ -49,6 +52,9 @@ public class Decoration {
     }
 
     public void setMaterial(String material) {
+        if (material == null) {
+            throw new IllegalArgumentException("Invalid material");
+        }
         this.material = material;
     }
 
@@ -57,6 +63,9 @@ public class Decoration {
     }
 
     public void setValue(double value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException("Invalid value");
+        }
         this.value = value;
     }
 

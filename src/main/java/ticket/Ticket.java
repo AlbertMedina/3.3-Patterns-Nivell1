@@ -16,7 +16,7 @@ public class Ticket {
             throw new IllegalArgumentException("Invalid date");
         }
 
-        if (price >= 0) {
+        if (price <= 0) {
             throw new IllegalArgumentException("Invalid price");
         }
 
@@ -35,6 +35,9 @@ public class Ticket {
     }
 
     public LocalDate getDate() {
+        if (date == null) {
+            throw new IllegalArgumentException("Invalid date");
+        }
         return date;
     }
 
@@ -47,6 +50,9 @@ public class Ticket {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Invalid price");
+        }
         this.price = price;
     }
 

@@ -11,6 +11,7 @@ public class EscapeRoom {
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidNameException();
         }
+        
         this.name = name;
     }
 
