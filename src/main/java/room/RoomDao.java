@@ -13,7 +13,7 @@ public class RoomDao implements GenericDao<Room> {
     public Room findById(int id) {
         String sqlQuery = "SELECT * FROM room WHERE id = ?";
         Room room = null;
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
@@ -35,7 +35,7 @@ public class RoomDao implements GenericDao<Room> {
 
         List<Room> rooms = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery);
              ResultSet rs = ps.executeQuery()) {
 
@@ -53,7 +53,7 @@ public class RoomDao implements GenericDao<Room> {
     @Override
     public boolean insert(Room element) {
         String sql = "INSERT INTO room (name, difficulty, price, escape_room_id) VALUES (?, ?, ?, ?)";
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -80,7 +80,7 @@ public class RoomDao implements GenericDao<Room> {
     public boolean update(Room element) {
         String sql = "UPDATE room SET name = ?, difficulty = ?, price = ?, escape_room_id = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -101,7 +101,7 @@ public class RoomDao implements GenericDao<Room> {
     public boolean delete(int id) {
         String sqlQuery = "DELETE FROM room WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
