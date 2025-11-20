@@ -15,14 +15,15 @@ public class HintDaoImpl implements GenericDao<Hint> {
     }
 
     private Hint map(ResultSet resultSet) throws SQLException {
-        return new Hint(
+        Hint hint = new Hint(
                 resultSet.getString("text"),
                 resultSet.getString("theme"),
                 resultSet.getDouble("value"),
                 resultSet.getInt("room_id")
         );
+        hint.setId(resultSet.getInt("id"));
+        return hint;
     }
-
 
     @Override
     public Hint findById(int id) {
