@@ -13,7 +13,7 @@ public class UserDao implements GenericDao<User> {
     public User findById(int id) {
         String sqlQuery = "SELECT * FROM user WHERE id = ?";
         User user = null;
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
@@ -35,7 +35,7 @@ public class UserDao implements GenericDao<User> {
 
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery);
              ResultSet rs = ps.executeQuery()) {
 
@@ -53,7 +53,7 @@ public class UserDao implements GenericDao<User> {
     @Override
     public boolean insert(User element) {
         String sql = "INSERT INTO user (name, surnames, email) VALUES (?, ?, ?)";
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
@@ -79,7 +79,7 @@ public class UserDao implements GenericDao<User> {
     public boolean update(User element) {
         String sql = "UPDATE user SET name = ?, surnames = ?, email = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
@@ -99,7 +99,7 @@ public class UserDao implements GenericDao<User> {
     public boolean delete(int id) {
         String sqlQuery = "DELETE FROM user WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
