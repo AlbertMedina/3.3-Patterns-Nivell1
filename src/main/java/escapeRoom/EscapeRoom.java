@@ -8,7 +8,7 @@ public class EscapeRoom {
     private String name;
 
     public EscapeRoom(String name) {
-        if (name == null || name.isBlank()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new InvalidNameException();
         }
         this.name = name;
@@ -27,7 +27,7 @@ public class EscapeRoom {
     }
 
     public void setName(String name) {
-        if (name == null || name.isBlank()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new InvalidNameException();
         }
         this.name = name;
@@ -38,7 +38,3 @@ public class EscapeRoom {
         return "EscapeRoom{id=" + id + ", name='" + name + "'}";
     }
 }
-
-
-
-

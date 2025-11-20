@@ -13,30 +13,30 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     public EscapeRoom findById(int id) {
         String sql = "SELECT id, name FROM escape_room WHERE id = ?";
 
+        EscapeRoom escapeRoom = null;
+
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    EscapeRoom escapeRoom = new EscapeRoom(rs.getString("name"));
-                    escapeRoom.setId(rs.getInt("id"));
-                            return escapeRoom;
-                }
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                escapeRoom = new EscapeRoom(rs.getString("name"));
+                escapeRoom.setId(rs.getInt("id"));
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return null;
+        return escapeRoom;
     }
 
     @Override
     public List<EscapeRoom> findAll() {
-        List<EscapeRoom> escapeRoomList = new ArrayList<>();
         String sql = "SELECT id, name FROM escape_room";
+
+        List<EscapeRoom> escapeRoomList = new ArrayList<>();
 
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -47,7 +47,6 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
                 escapeRoom.setId(rs.getInt("id"));
                 escapeRoomList.add(escapeRoom);
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -64,16 +63,14 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
 
             ps.setString(1, element.getName());
 
-            int rows = ps.executeUpdate();
-            if (rows == 0) return false;
+            int rowsAffected = ps.executeUpdate();
 
-            try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) {
-                    element.setId(keys.getInt(1));
-                }
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next()) {
+                element.setId(keys.getInt(1));
             }
 
-            return true;
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -109,6 +106,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
+            
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {

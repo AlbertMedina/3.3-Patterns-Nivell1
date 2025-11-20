@@ -11,10 +11,12 @@ public class UserDao implements GenericDao<User> {
 
     @Override
     public User findById(int id) {
-        String sqlQuery = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM user WHERE id = ?";
+
         User user = null;
+
         try (Connection connection = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -26,17 +28,18 @@ public class UserDao implements GenericDao<User> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return user;
     }
 
     @Override
     public List<User> findAll() {
-        String sqlQuery = "SELECT * FROM user";
+        String sql = "SELECT * FROM user";
 
         List<User> users = new ArrayList<>();
 
         try (Connection connection = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(sqlQuery);
+             PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -47,12 +50,14 @@ public class UserDao implements GenericDao<User> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return users;
     }
 
     @Override
     public boolean insert(User element) {
         String sql = "INSERT INTO user (name, surnames, email) VALUES (?, ?, ?)";
+
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -72,6 +77,7 @@ public class UserDao implements GenericDao<User> {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+
         return false;
     }
 
@@ -92,15 +98,16 @@ public class UserDao implements GenericDao<User> {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+
         return false;
     }
 
     @Override
     public boolean delete(int id) {
-        String sqlQuery = "DELETE FROM user WHERE id = ?";
+        String sql = "DELETE FROM user WHERE id = ?";
 
         try (Connection connection = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -109,7 +116,7 @@ public class UserDao implements GenericDao<User> {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+
         return false;
     }
 }
-
