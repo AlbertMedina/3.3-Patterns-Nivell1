@@ -1,4 +1,4 @@
-package escapeRoom;
+package user;
 
 import db.DBConnection;
 import db.GenericDao;
@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
+public class UserDaoImpl implements GenericDao<User> {
 
     @Override
-    public EscapeRoom findById(int id) {
-        String sql = "SELECT id, name FROM escape_room WHERE id = ?";
+    public User findById(int id) {
+        String sql = "SELECT * FROM user WHERE id = ?";
 
-        EscapeRoom escapeRoom = null;
+        User user = null;
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -22,77 +22,81 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                escapeRoom = new EscapeRoom(rs.getString("name"));
-                escapeRoom.setId(rs.getInt("id"));
+                user = new User(rs.getString("name"), rs.getString("surnames"), rs.getString("email"));
+                user.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return escapeRoom;
+        return user;
     }
 
     @Override
-    public List<EscapeRoom> findAll() {
-        String sql = "SELECT id, name FROM escape_room";
+    public List<User> findAll() {
+        String sql = "SELECT * FROM user";
 
-        List<EscapeRoom> escapeRoomList = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                EscapeRoom escapeRoom = new EscapeRoom(rs.getString("name"));
-                escapeRoom.setId(rs.getInt("id"));
-                escapeRoomList.add(escapeRoom);
+                User user = new User(rs.getString("name"), rs.getString("surnames"), rs.getString("email"));
+                user.setId(rs.getInt("id"));
+                users.add(user);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return escapeRoomList;
+        return users;
     }
 
     @Override
-    public boolean insert(EscapeRoom element) {
-        String sql = "INSERT INTO escape_room (name) VALUES (?)";
+    public boolean insert(User element) {
+        String sql = "INSERT INTO user (name, surnames, email) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
+            ps.setString(2, element.getSurnames());
+            ps.setString(3, element.getEmail());
 
             int rowsAffected = ps.executeUpdate();
 
-            ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) {
-                element.setId(keys.getInt(1));
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                element.setId(rs.getInt(1));
             }
 
             return rowsAffected > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         return false;
     }
 
     @Override
-    public boolean update(EscapeRoom element) {
-        String sql = "UPDATE escape_room SET name = ? WHERE id = ?";
+    public boolean update(User element) {
+        String sql = "UPDATE user SET name = ?, surnames = ?, email = ? WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
-            ps.setInt(2, element.getId());
+            ps.setString(2, element.getSurnames());
+            ps.setString(3, element.getEmail());
+            ps.setInt(4, element.getId());
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         return false;
@@ -100,7 +104,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM escape_room WHERE id = ?";
+        String sql = "DELETE FROM user WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -110,7 +114,7 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         return false;
@@ -119,5 +123,4 @@ public class EscapeRoomDAO implements GenericDao<EscapeRoom> {
     private Connection getConnection() throws SQLException {
         return DBConnection.getInstance().getConnection();
     }
-
 }

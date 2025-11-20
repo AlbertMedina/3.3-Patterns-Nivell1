@@ -1,4 +1,4 @@
-package room;
+package certification;
 
 import db.DBConnection;
 import db.GenericDao;
@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao implements GenericDao<Room> {
+public class CertificationDaoImpl implements GenericDao<Certification> {
 
     @Override
-    public Room findById(int id) {
-        String sql = "SELECT * FROM room WHERE id = ?";
+    public Certification findById(int id) {
+        String sql = "SELECT * FROM certification WHERE id = ?";
 
-        Room room = null;
+        Certification certification = null;
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -22,49 +22,49 @@ public class RoomDao implements GenericDao<Room> {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"), rs.getInt("escape_room_id"));
-                room.setId(rs.getInt("id"));
+                certification = new Certification(rs.getString("name"), rs.getDate("date").toLocalDate(), rs.getInt("room_id"), rs.getInt("user_id"));
+                certification.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return room;
+        return certification;
     }
 
     @Override
-    public List<Room> findAll() {
-        String sql = "SELECT * FROM room";
+    public List<Certification> findAll() {
+        String sql = "SELECT * FROM certification";
 
-        List<Room> rooms = new ArrayList<>();
+        List<Certification> certifications = new ArrayList<>();
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Room room = new Room(rs.getString("name"), Enum.valueOf(Difficulty.class, rs.getString("difficulty")), rs.getDouble("price"), rs.getInt("escape_room_id"));
-                room.setId(rs.getInt("id"));
-                rooms.add(room);
+                Certification certification = new Certification(rs.getString("name"), rs.getDate("date").toLocalDate(), rs.getInt("room_id"), rs.getInt("user_id"));
+                certification.setId(rs.getInt("id"));
+                certifications.add(certification);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return rooms;
+        return certifications;
     }
 
     @Override
-    public boolean insert(Room element) {
-        String sql = "INSERT INTO room (name, difficulty, price, escape_room_id) VALUES (?, ?, ?, ?)";
+    public boolean insert(Certification element) {
+        String sql = "INSERT INTO certification (name, date, room_id, user_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
-            ps.setString(2, element.getDifficulty().name());
-            ps.setDouble(3, element.getPrice());
-            ps.setInt(4, element.getEscapeRoomId());
+            ps.setDate(2, Date.valueOf(element.getDate()));
+            ps.setInt(3, element.getRoomId());
+            ps.setInt(4, element.getUserId());
 
             int rowsAffected = ps.executeUpdate();
 
@@ -83,16 +83,16 @@ public class RoomDao implements GenericDao<Room> {
     }
 
     @Override
-    public boolean update(Room element) {
-        String sql = "UPDATE room SET name = ?, difficulty = ?, price = ?, escape_room_id = ? WHERE id = ?";
+    public boolean update(Certification element) {
+        String sql = "UPDATE certification SET name = ?, date = ?, room_id = ?, user_id = ? WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
-            ps.setString(2, element.getDifficulty().name());
-            ps.setDouble(3, element.getPrice());
-            ps.setInt(4, element.getEscapeRoomId());
+            ps.setDate(2, Date.valueOf(element.getDate()));
+            ps.setInt(3, element.getRoomId());
+            ps.setInt(4, element.getUserId());
             ps.setInt(5, element.getId());
 
             return ps.executeUpdate() > 0;
@@ -106,7 +106,7 @@ public class RoomDao implements GenericDao<Room> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM room WHERE id = ?";
+        String sql = "DELETE FROM certification WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

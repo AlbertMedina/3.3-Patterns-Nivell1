@@ -1,4 +1,4 @@
-package ticket;
+package decoration;
 
 import db.DBConnection;
 import db.GenericDao;
@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketDao implements GenericDao<Ticket> {
+public class DecorationDaoImpl implements GenericDao<Decoration> {
 
     @Override
-    public Ticket findById(int id) {
-        String sql = "SELECT * FROM ticket WHERE id = ?";
+    public Decoration findById(int id) {
+        String sql = "SELECT * FROM decoration WHERE id = ?";
 
-        Ticket ticket = null;
+        Decoration decoration = null;
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -22,49 +22,49 @@ public class TicketDao implements GenericDao<Ticket> {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ticket = new Ticket(rs.getDate("date").toLocalDate(), rs.getDouble("price"), rs.getInt("room_id"), rs.getInt("user_id"));
-                ticket.setId(rs.getInt("id"));
+                decoration = new Decoration(rs.getString("name"), rs.getString("material"), rs.getDouble("value"), rs.getInt("room_id"));
+                decoration.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return ticket;
+        return decoration;
     }
 
     @Override
-    public List<Ticket> findAll() {
-        String sql = "SELECT * FROM ticket";
+    public List<Decoration> findAll() {
+        String sql = "SELECT * FROM decoration";
 
-        List<Ticket> tickets = new ArrayList<>();
+        List<Decoration> decorations = new ArrayList<>();
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Ticket ticket = new Ticket(rs.getDate("date").toLocalDate(), rs.getDouble("price"), rs.getInt("room_id"), rs.getInt("user_id"));
-                ticket.setId(rs.getInt("id"));
-                tickets.add(ticket);
+                Decoration decoration = new Decoration(rs.getString("name"), rs.getString("material"), rs.getDouble("value"), rs.getInt("room_id"));
+                decoration.setId(rs.getInt("id"));
+                decorations.add(decoration);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return tickets;
+        return decorations;
     }
 
     @Override
-    public boolean insert(Ticket element) {
-        String sql = "INSERT INTO ticket (date, price, room_id, user_id) VALUES (?, ?, ?, ?)";
+    public boolean insert(Decoration element) {
+        String sql = "INSERT INTO decoration (name, material, value, room_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setDate(1, Date.valueOf(element.getDate()));
-            ps.setDouble(2, element.getPrice());
-            ps.setInt(3, element.getRoomId());
-            ps.setInt(4, element.getUserId());
+            ps.setString(1, element.getName());
+            ps.setString(2, element.getMaterial());
+            ps.setDouble(3, element.getValue());
+            ps.setInt(4, element.getRoomId());
 
             int rowsAffected = ps.executeUpdate();
 
@@ -83,16 +83,16 @@ public class TicketDao implements GenericDao<Ticket> {
     }
 
     @Override
-    public boolean update(Ticket element) {
-        String sql = "UPDATE ticket SET date = ?, price = ?, room_id = ?, user_id = ? WHERE id = ?";
+    public boolean update(Decoration element) {
+        String sql = "UPDATE decoration SET name = ?, material = ?, value = ?, room_id = ? WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setDate(1, Date.valueOf(element.getDate()));
-            ps.setDouble(2, element.getPrice());
-            ps.setInt(3, element.getRoomId());
-            ps.setInt(4, element.getUserId());
+            ps.setString(1, element.getName());
+            ps.setString(2, element.getMaterial());
+            ps.setDouble(3, element.getValue());
+            ps.setInt(4, element.getRoomId());
             ps.setInt(5, element.getId());
 
             return ps.executeUpdate() > 0;
@@ -106,7 +106,7 @@ public class TicketDao implements GenericDao<Ticket> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM ticket WHERE id = ?";
+        String sql = "DELETE FROM decoration WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

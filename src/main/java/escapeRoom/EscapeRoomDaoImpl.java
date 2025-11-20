@@ -1,4 +1,4 @@
-package decoration;
+package escapeRoom;
 
 import db.DBConnection;
 import db.GenericDao;
@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DecorationDao implements GenericDao<Decoration> {
+public class EscapeRoomDaoImpl implements GenericDao<EscapeRoom> {
 
     @Override
-    public Decoration findById(int id) {
-        String sql = "SELECT * FROM decoration WHERE id = ?";
+    public EscapeRoom findById(int id) {
+        String sql = "SELECT id, name FROM escape_room WHERE id = ?";
 
-        Decoration decoration = null;
+        EscapeRoom escapeRoom = null;
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -22,83 +22,77 @@ public class DecorationDao implements GenericDao<Decoration> {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                decoration = new Decoration(rs.getString("name"), rs.getString("material"), rs.getDouble("value"), rs.getInt("room_id"));
-                decoration.setId(rs.getInt("id"));
+                escapeRoom = new EscapeRoom(rs.getString("name"));
+                escapeRoom.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return decoration;
+        return escapeRoom;
     }
 
     @Override
-    public List<Decoration> findAll() {
-        String sql = "SELECT * FROM decoration";
+    public List<EscapeRoom> findAll() {
+        String sql = "SELECT id, name FROM escape_room";
 
-        List<Decoration> decorations = new ArrayList<>();
+        List<EscapeRoom> escapeRoomList = new ArrayList<>();
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Decoration decoration = new Decoration(rs.getString("name"), rs.getString("material"), rs.getDouble("value"), rs.getInt("room_id"));
-                decoration.setId(rs.getInt("id"));
-                decorations.add(decoration);
+                EscapeRoom escapeRoom = new EscapeRoom(rs.getString("name"));
+                escapeRoom.setId(rs.getInt("id"));
+                escapeRoomList.add(escapeRoom);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return decorations;
+        return escapeRoomList;
     }
 
     @Override
-    public boolean insert(Decoration element) {
-        String sql = "INSERT INTO decoration (name, material, value, room_id) VALUES (?, ?, ?, ?)";
+    public boolean insert(EscapeRoom element) {
+        String sql = "INSERT INTO escape_room (name) VALUES (?)";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, element.getName());
-            ps.setString(2, element.getMaterial());
-            ps.setDouble(3, element.getValue());
-            ps.setInt(4, element.getRoomId());
 
             int rowsAffected = ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                element.setId(rs.getInt(1));
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next()) {
+                element.setId(keys.getInt(1));
             }
 
             return rowsAffected > 0;
 
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         return false;
     }
 
     @Override
-    public boolean update(Decoration element) {
-        String sql = "UPDATE decoration SET name = ?, material = ?, value = ?, room_id = ? WHERE id = ?";
+    public boolean update(EscapeRoom element) {
+        String sql = "UPDATE escape_room SET name = ? WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, element.getName());
-            ps.setString(2, element.getMaterial());
-            ps.setDouble(3, element.getValue());
-            ps.setInt(4, element.getRoomId());
-            ps.setInt(5, element.getId());
+            ps.setInt(2, element.getId());
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         return false;
@@ -106,7 +100,7 @@ public class DecorationDao implements GenericDao<Decoration> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM decoration WHERE id = ?";
+        String sql = "DELETE FROM escape_room WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -116,7 +110,7 @@ public class DecorationDao implements GenericDao<Decoration> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         return false;
@@ -125,4 +119,5 @@ public class DecorationDao implements GenericDao<Decoration> {
     private Connection getConnection() throws SQLException {
         return DBConnection.getInstance().getConnection();
     }
+
 }
