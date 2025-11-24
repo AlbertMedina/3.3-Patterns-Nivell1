@@ -11,8 +11,9 @@ public class UserMenuHandler extends AbstractMenuHandler {
         System.out.println("2. Purchase ticket");
         System.out.println("3. Give certification");
         System.out.println("4. Give reward");
+        System.out.println("5. Manage subscription");
         System.out.println("0. Back");
-        return InputHandler.readInt("Choose what to do next (0-4)");
+        return InputHandler.readInt("Choose what to do next (0-5)");
     }
 
     @Override
@@ -25,6 +26,8 @@ public class UserMenuHandler extends AbstractMenuHandler {
             case 3:
                 break;
             case 4:
+                break;
+            case 5:
                 break;
             case 0:
                 System.out.println("Going back to main menu...");

@@ -14,8 +14,9 @@ public class MainMenuHandler extends AbstractMenuHandler {
         System.out.println("5. Manage user");
         System.out.println("6. Remove user");
         System.out.println("7. Check revenues");
+        System.out.println("8. Send notification to subscribed users");
         System.out.println("0. Exit");
-        return InputHandler.readInt("Choose what to do next (0-7)");
+        return InputHandler.readInt("Choose what to do next (0-8)");
     }
 
     @Override
@@ -34,6 +35,8 @@ public class MainMenuHandler extends AbstractMenuHandler {
             case 6:
                 break;
             case 7:
+                break;
+            case 8:
                 break;
             case 0:
                 System.out.println("See you soon!");
