@@ -19,6 +19,10 @@ public class RoomService {
         return roomDao.findAll();
     }
 
+    public List<Room> getRoomsByEscapeRoom(int escapeRoomId) {
+        return roomDao.findAllByEscapeRoom(escapeRoomId);
+    }
+
     public Room getRoomById(int id) {
         return roomDao.findById(id);
     }

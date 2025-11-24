@@ -19,6 +19,10 @@ public class HintService {
         return hintDao.findAll();
     }
 
+    public List<Hint> getHintsByRoom(int roomId) {
+        return hintDao.findAllByRoom(roomId);
+    }
+
     public Hint getHintById(int id) {
         return hintDao.findById(id);
     }

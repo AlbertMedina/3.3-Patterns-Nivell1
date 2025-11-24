@@ -19,6 +19,10 @@ public class DecorationService {
         return decorationDao.findAll();
     }
 
+    public List<Decoration> getDecorationsByRoom(int roomId) {
+        return decorationDao.findAllByRoom(roomId);
+    }
+
     public Decoration getDecorationById(int id) {
         return decorationDao.findById(id);
     }
