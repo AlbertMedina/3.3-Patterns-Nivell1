@@ -36,6 +36,17 @@ public class InputHandler {
         }
     }
 
+    public static double readDouble(String message) {
+        while (true) {
+            try {
+                System.out.print(message + " ");
+                return Double.parseDouble(SCANNER.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Try again.");
+            }
+        }
+    }
+
     public static void closeScanner() {
         SCANNER.close();
     }
