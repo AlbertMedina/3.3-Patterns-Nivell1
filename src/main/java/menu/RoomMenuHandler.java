@@ -1,6 +1,8 @@
 package menu;
 
+import decoration.Decoration;
 import decoration.DecorationService;
+import hint.Hint;
 import hint.HintService;
 import input.InputHandler;
 import room.Difficulty;
@@ -22,6 +24,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
     @Override
     protected int showMenuAndReadOption() {
+        System.out.println("ROOM ID:" + entity.getId() + "(" + entity.getName() + ")");
         System.out.println("We can do the following:");
         System.out.println("1. Edit room data");
         System.out.println("2. Add hint");
@@ -44,6 +47,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
                 addHint();
                 break;
             case 3:
+                manageHint();
                 break;
             case 4:
                 removeHint();
@@ -52,6 +56,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
                 addDecoration();
                 break;
             case 6:
+                manageDecoration();
                 break;
             case 7:
                 removeDecoration();
@@ -94,6 +99,18 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         }
     }
 
+    private void manageHint() {
+        int hintId = InputHandler.readInt("Enter hint Id");
+        Hint hint = hintService.getHintById(hintId);
+
+        if (hint != null) {
+            HintMenuHandler hintMenu = new HintMenuHandler(hint);
+            hintMenu.run();
+        } else {
+            System.out.println("Hint Id:" + hintId + " could not be found");
+        }
+    }
+
     private void removeHint() {
         System.out.println("Removing hint from room Id:" + entity.getId());
         int hintId = InputHandler.readInt("Enter hint Id");
@@ -117,6 +134,18 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             System.out.println("Decoration added successfully to room Id:" + entity.getId());
         } else {
             System.out.println("Error adding decoration to room Id:" + entity.getId());
+        }
+    }
+
+    private void manageDecoration() {
+        int decorationId = InputHandler.readInt("Enter decoration Id");
+        Decoration decoration = decorationService.getDecorationById(decorationId);
+
+        if (decoration != null) {
+            DecorationMenuHandler decorationMenu = new DecorationMenuHandler(decoration);
+            decorationMenu.run();
+        } else {
+            System.out.println("Decoration Id:" + decorationId + " could not be found");
         }
     }
 
