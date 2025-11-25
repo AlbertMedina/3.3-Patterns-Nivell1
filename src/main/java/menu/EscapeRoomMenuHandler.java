@@ -3,12 +3,19 @@ package menu;
 import escapeRoom.EscapeRoom;
 import escapeRoom.EscapeRoomService;
 import input.InputHandler;
+import room.Room;
+import room.RoomService;
 
 import java.util.List;
 
-public class EscapeRoomMenuHandler extends AbstractMenuHandler {
+public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
 
     private EscapeRoomService service = new EscapeRoomService();
+    private RoomService roomService = new RoomService();
+
+    public EscapeRoomMenuHandler(EscapeRoom escapeRoom) {
+        super(escapeRoom);
+    }
 
     @Override
     protected int showMenuAndReadOption() {
@@ -78,16 +85,16 @@ public class EscapeRoomMenuHandler extends AbstractMenuHandler {
     }
 
     private void manageEscapeRoom() {
-        int id = InputHandler.readInt("Enter Escape Room ID to manage");
-        EscapeRoom escapeRoom = service.getEscapeRoom(id);
+        int id = InputHandler.readInt("Enter Room ID to manage");
+        Room room = roomService.getRoomById(id);
 
-        if (escapeRoom == null) {
-            System.out.println("Escape Room not found");
+        if (room == null) {
+            System.out.println("Room not found");
             return;
         }
-        System.out.println("Managing Escape Room: " + escapeRoom.getName());
+        System.out.println("Managing Room: " + room.getName());
 
-        new RoomMenuHandler().run();
+        new RoomMenuHandler(room).run();
     }
 
     private void removeEscapeRoom() {
