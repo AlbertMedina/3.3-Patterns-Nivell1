@@ -1,8 +1,13 @@
 package menu;
 
 import input.InputHandler;
+import user.User;
 
-public class UserMenuHandler extends AbstractMenuHandler {
+public class UserMenuHandler extends EntityMenuHandler<User> {
+
+    public UserMenuHandler(User user) {
+        super(user);
+    }
 
     @Override
     protected int showMenuAndReadOption() {

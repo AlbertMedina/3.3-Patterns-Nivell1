@@ -7,15 +7,14 @@ import room.Difficulty;
 import room.Room;
 import room.RoomService;
 
-public class RoomMenuHandler extends AbstractMenuHandler {
-
-    private Room room;
+public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
     RoomService roomService;
     HintService hintService;
     DecorationService decorationService;
 
-    public RoomMenuHandler() {
+    public RoomMenuHandler(Room room) {
+        super(room);
         roomService = new RoomService();
         hintService = new HintService();
         decorationService = new DecorationService();
@@ -67,69 +66,69 @@ public class RoomMenuHandler extends AbstractMenuHandler {
     }
 
     private void editRoomData() {
-        System.out.println("Editing data for room Id:" + room.getId());
-        String name = InputHandler.readString("Enter new name (current: " + room.getName() + ")");
-        int difficulty = InputHandler.readInt("Enter new difficulty (1-3) (current: " + room.getDifficulty().toString().toLowerCase() + ")");
-        Double price = InputHandler.readDouble("Enter new price (current: " + room.getPrice() + ")");
-        int escapeRoomId = InputHandler.readInt("Enter new escape room id (current: " + room.getEscapeRoomId() + ")");
+        System.out.println("Editing data for room Id:" + entity.getId());
+        String name = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
+        int difficulty = InputHandler.readInt("Enter new difficulty (1-3) (current: " + entity.getDifficulty().toString().toLowerCase() + ")");
+        Double price = InputHandler.readDouble("Enter new price (current: " + entity.getPrice() + ")");
+        int escapeRoomId = InputHandler.readInt("Enter new escape room id (current: " + entity.getEscapeRoomId() + ")");
 
         boolean success = roomService.updateRoom(name, Difficulty.fromInt(difficulty), price, escapeRoomId);
         if (success) {
-            System.out.println("Data updated successfully for room Id:" + room.getId());
+            System.out.println("Data updated successfully for room Id:" + entity.getId());
         } else {
-            System.out.println("Error updating data for room Id:" + room.getId());
+            System.out.println("Error updating data for room Id:" + entity.getId());
         }
     }
 
     private void addHint() {
-        System.out.println("Adding new hint to room Id:" + room.getId());
+        System.out.println("Adding new hint to room Id:" + entity.getId());
         String text = InputHandler.readString("Enter hint text");
         String theme = InputHandler.readString("Enter hint theme");
         Double value = InputHandler.readDouble("Enter hint value");
 
-        boolean success = hintService.addHint(text, theme, value, room.getId());
+        boolean success = hintService.addHint(text, theme, value, entity.getId());
         if (success) {
-            System.out.println("Hint added successfully to room Id:" + room.getId());
+            System.out.println("Hint added successfully to room Id:" + entity.getId());
         } else {
-            System.out.println("Error adding hint to room Id:" + room.getId());
+            System.out.println("Error adding hint to room Id:" + entity.getId());
         }
     }
 
     private void removeHint() {
-        System.out.println("Removing hint from room Id:" + room.getId());
+        System.out.println("Removing hint from room Id:" + entity.getId());
         int hintId = InputHandler.readInt("Enter hint Id");
 
         boolean success = hintService.removeHint(hintId);
         if (success) {
-            System.out.println("Hint removed successfully from room Id:" + room.getId());
+            System.out.println("Hint removed successfully from room Id:" + entity.getId());
         } else {
-            System.out.println("Error removing hint from room Id:" + room.getId());
+            System.out.println("Error removing hint from room Id:" + entity.getId());
         }
     }
 
     private void addDecoration() {
-        System.out.println("Adding new decoration to room Id:" + room.getId());
+        System.out.println("Adding new decoration to room Id:" + entity.getId());
         String name = InputHandler.readString("Enter decoration name");
         String material = InputHandler.readString("Enter decoration material");
         Double value = InputHandler.readDouble("Enter decoration value");
 
-        boolean success = decorationService.addDecoration(name, material, value, room.getId());
+        boolean success = decorationService.addDecoration(name, material, value, entity.getId());
         if (success) {
-            System.out.println("Decoration added successfully to room Id:" + room.getId());
+            System.out.println("Decoration added successfully to room Id:" + entity.getId());
         } else {
-            System.out.println("Error adding decoration to room Id:" + room.getId());
+            System.out.println("Error adding decoration to room Id:" + entity.getId());
         }
     }
 
     private void removeDecoration() {
-        System.out.println("Removing decoration from room Id:" + room.getId());
+        System.out.println("Removing decoration from room Id:" + entity.getId());
         int decorationId = InputHandler.readInt("Enter decoration Id");
 
         boolean success = decorationService.removeDecoration(decorationId);
         if (success) {
-            System.out.println("Decoration removed successfully from room Id:" + room.getId());
+            System.out.println("Decoration removed successfully from room Id:" + entity.getId());
         } else {
-            System.out.println("Error removing hint from room Id:" + room.getId());
+            System.out.println("Error removing hint from room Id:" + entity.getId());
         }
     }
 }
