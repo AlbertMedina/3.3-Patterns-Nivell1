@@ -24,7 +24,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
     @Override
     protected int showMenuAndReadOption() {
-        System.out.println("ROOM ID:" + entity.getId() + "(" + entity.getName() + ")");
+        System.out.println("ROOM ID:" + entity.getId() + " (" + entity.getName() + ")" + " MENU");
         System.out.println("We can do the following:");
         System.out.println("1. Edit room data");
         System.out.println("2. Add hint");
