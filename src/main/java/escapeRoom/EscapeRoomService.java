@@ -28,9 +28,7 @@ public class EscapeRoomService {
         return rooms;
     }
 
-    public boolean updateEscapeRoom(int id, String newName) {
-        EscapeRoom escapeRoom = escapeRoomDao.findById(id);
-        if (escapeRoom == null) return false;
+    public boolean updateEscapeRoom(EscapeRoom escapeRoom, String newName) {
 
         escapeRoom.setName(newName);
         return escapeRoomDao.update(escapeRoom);

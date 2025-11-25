@@ -3,6 +3,7 @@ package menu;
 import escapeRoom.EscapeRoom;
 import escapeRoom.EscapeRoomService;
 import input.InputHandler;
+import room.Difficulty;
 import room.Room;
 import room.RoomService;
 
@@ -36,13 +37,13 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
                 editEscapeRoom();
                 break;
             case 2:
-                addEscapeRoom();
+                addRoom();
                 break;
             case 3:
-                manageEscapeRoom();
+                manageRoom();
                 break;
             case 4:
-                removeEscapeRoom();
+                removeRoom();
                 break;
             case 5:
                 showAllRooms();
@@ -57,34 +58,38 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
     }
 
     private void editEscapeRoom() {
-        int id = InputHandler.readInt("Enter Escape Room ID to edit");
-        EscapeRoom escapeRoom = service.getEscapeRoom(id);
-        if (escapeRoom == null) {
-            System.out.println("️Escape Room not found");
-            return;
-        }
-
         String newName = InputHandler.readString("Enter new name for Escape Room");
 
         try {
-            boolean updated = service.updateEscapeRoom(id, newName);
-            System.out.println(updated ? "Escape Room Updated" : " Could not update Escape Room");
+            boolean updated = service.updateEscapeRoom(entity, newName);
+            System.out.println(updated ? "Escape Room Updated" : "Could not update Escape Room");
+            if (updated) {
+                entity.setName(newName);
+            }
         } catch (Exception error) {
             System.out.println("Error: " + error.getMessage());
         }
     }
 
-    private void addEscapeRoom() {
-        String name = InputHandler.readString("Enter new Escape Room name: ");
+    private void addRoom() {
+        String name = InputHandler.readString("Enter new Room name: ");
+
+        int diffNumber = InputHandler.readInt("Enter difficulty (1-3): ");
+        Difficulty difficulty = Difficulty.fromInt(diffNumber);
+
+        double price = InputHandler.readDouble("Enter price: ");
+
+        int escapeRoomId = entity.getId();
+
         try {
-            boolean created = service.createEscapeRoom(name);
-            System.out.println(created ? "Escape Room created" : " Could not create Escape Room");
+            boolean created = roomService.addRoom(name, difficulty, price, escapeRoomId);
+            System.out.println(created ? "Room created" : "Could not create room");
         } catch (Exception error) {
             System.out.println("Error: " + error.getMessage());
         }
     }
 
-    private void manageEscapeRoom() {
+    private void manageRoom() {
         int id = InputHandler.readInt("Enter Room ID to manage");
         Room room = roomService.getRoomById(id);
 
@@ -97,13 +102,13 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
         new RoomMenuHandler(room).run();
     }
 
-    private void removeEscapeRoom() {
+    private void removeRoom() {
 
-        int id = InputHandler.readInt("Enter Escape Room ID to remove");
+        int id = InputHandler.readInt("Enter Room ID to remove");
 
         try {
-            boolean removed = service.deleteEscapeRoom(id);
-            System.out.println(removed ? "Escape Room deleted" : " Could not delete room");
+            boolean removed = roomService.removeRoom(id);
+            System.out.println(removed ? "Room deleted" : "Could not delete room");
         } catch (Exception error) {
             System.out.println("Error: " + error.getMessage());
         }
@@ -111,16 +116,19 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
 
     private void showAllRooms() {
 
-        List<EscapeRoom> rooms = service.listEscapeRooms();
+        List<Room> rooms = roomService.getRoomsByEscapeRoom(entity.getId());
 
         if (rooms.isEmpty()) {
-            System.out.println("There are no escape rooms yet.");
+            System.out.println("There are no rooms in this escape room.");
             return;
         }
 
-        System.out.println("📌 Escape Rooms:");
-        for (EscapeRoom escapeRoom : rooms) {
-            System.out.println("ID: " + escapeRoom.getId() + " | Name: " + escapeRoom.getName());
+        System.out.println("📌 Rooms in " + entity.getName() + ":");
+        for (Room room : rooms) {
+            System.out.println("ID: " + room.getId() +
+                    " | Name: " + room.getName() +
+                    " | Difficulty: " + room.getDifficulty() +
+                    " | Price: " + room.getPrice());
         }
     }
 }
