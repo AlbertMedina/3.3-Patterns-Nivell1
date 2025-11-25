@@ -41,6 +41,7 @@ public class RewardService {
         }
 
         Reward reward = new Reward(newName, newDescription, newDate, newUserId);
+        reward.setId(id);
         return rewardDao.update(reward);
     }
 

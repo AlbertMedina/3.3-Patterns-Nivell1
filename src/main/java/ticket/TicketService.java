@@ -55,6 +55,7 @@ public class TicketService {
         }
 
         Ticket ticket = new Ticket(newDate, newPrice, newRoomId, newUserId);
+        ticket.setId(id);
         return ticketDao.update(ticket);
     }
 

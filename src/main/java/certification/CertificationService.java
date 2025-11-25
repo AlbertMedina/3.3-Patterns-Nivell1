@@ -55,6 +55,7 @@ public class CertificationService {
         }
 
         Certification certification = new Certification(newName, newDate, newRoomId, newUserId);
+        certification.setId(id);
         return certificationDao.update(certification);
     }
 

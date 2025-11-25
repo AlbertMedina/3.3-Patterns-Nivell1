@@ -37,13 +37,14 @@ public class HintService {
         return hintDao.insert(hint);
     }
 
-    public boolean updateHint(String newText, String newTheme, double newValue, int newRoomId) {
+    public boolean updateHint(int id, String newText, String newTheme, double newValue, int newRoomId) {
         Room room = roomDao.findById(newRoomId);
         if (room == null) {
             throw new IllegalArgumentException("Room with id " + newRoomId + " does not exist");
         }
 
         Hint hint = new Hint(newText, newTheme, newValue, newRoomId);
+        hint.setId(id);
         return hintDao.update(hint);
     }
 

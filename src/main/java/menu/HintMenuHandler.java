@@ -39,14 +39,19 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
 
     private void editHintData() {
         System.out.println("Editing data for hint Id:" + entity.getId());
-        String text = InputHandler.readString("Enter new text (current: " + entity.getText() + ")");
-        String theme = InputHandler.readString("Enter new theme (current: " + entity.getTheme() + ")");
-        double value = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
-        int roomId = InputHandler.readInt("Enter new room id (current: " + entity.getRoomId() + ")");
+        
+        String newText = InputHandler.readString("Enter new text (current: " + entity.getText() + ")");
+        String newTheme = InputHandler.readString("Enter new theme (current: " + entity.getTheme() + ")");
+        double newValue = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
+        int newRoomId = InputHandler.readInt("Enter new room id (current: " + entity.getRoomId() + ")");
 
         try {
-            boolean success = hintService.updateHint(text, theme, value, roomId);
+            boolean success = hintService.updateHint(entity.getId(), newText, newTheme, newValue, newRoomId);
             if (success) {
+                entity.setText(newText);
+                entity.setTheme(newTheme);
+                entity.setValue(newValue);
+                entity.setRoomId(newRoomId);
                 System.out.println("Data updated successfully for hint Id:" + entity.getId());
             } else {
                 System.out.println("Error updating data for hint Id:" + entity.getId());

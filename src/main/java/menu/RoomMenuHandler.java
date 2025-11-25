@@ -72,15 +72,20 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
     private void editRoomData() {
         System.out.println("Editing data for room Id:" + entity.getId());
-        
-        String name = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
-        int difficulty = InputHandler.readInt("Enter new difficulty (1-3) (current: " + entity.getDifficulty().toString().toLowerCase() + ")");
-        Double price = InputHandler.readDouble("Enter new price (current: " + entity.getPrice() + ")");
-        int escapeRoomId = InputHandler.readInt("Enter new escape room id (current: " + entity.getEscapeRoomId() + ")");
+
+        String newName = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
+        int newDifficultyValue = InputHandler.readInt("Enter new difficulty (1-3) (current: " + entity.getDifficulty().toString().toLowerCase() + ")");
+        Difficulty newDifficulty = Difficulty.fromInt(newDifficultyValue);
+        double newPrice = InputHandler.readDouble("Enter new price (current: " + entity.getPrice() + ")");
+        int newEscapeRoomId = InputHandler.readInt("Enter new escape room id (current: " + entity.getEscapeRoomId() + ")");
 
         try {
-            boolean success = roomService.updateRoom(name, Difficulty.fromInt(difficulty), price, escapeRoomId);
+            boolean success = roomService.updateRoom(entity.getId(), newName, newDifficulty, newPrice, newEscapeRoomId);
             if (success) {
+                entity.setName(newName);
+                entity.setDifficulty(newDifficulty);
+                entity.setPrice(newPrice);
+                entity.setEscapeRoomId(newEscapeRoomId);
                 System.out.println("Data updated successfully for room Id:" + entity.getId());
             } else {
                 System.out.println("Error updating data for room Id:" + entity.getId());
