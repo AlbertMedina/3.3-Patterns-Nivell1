@@ -28,9 +28,15 @@ public class EscapeRoomService {
         return rooms;
     }
 
-    public boolean updateEscapeRoom(EscapeRoom escapeRoom, String newName) {
+    public boolean updateEscapeRoom(int id, String newName) {
 
+        EscapeRoom escapeRoom = escapeRoomDao.findById(id);
+
+        if (escapeRoom == null) {
+            throw new IllegalArgumentException("Escape room with ID :" + id + " does not exist");
+        }
         escapeRoom.setName(newName);
+
         return escapeRoomDao.update(escapeRoom);
     }
 

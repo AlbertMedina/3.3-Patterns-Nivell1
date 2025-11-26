@@ -3,7 +3,6 @@ package menu;
 import escapeRoom.EscapeRoom;
 import escapeRoom.EscapeRoomService;
 import input.InputHandler;
-import room.Difficulty;
 import room.Room;
 import room.RoomService;
 
@@ -62,7 +61,7 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
         String newName = InputHandler.readString("Enter new name for Escape Room");
 
         try {
-            boolean updated = service.updateEscapeRoom(newName);
+            boolean updated = service.updateEscapeRoom(entity.getId(), newName);
             System.out.println(updated ? "Escape Room Updated" : "Could not update Escape Room");
             if (updated) {
                 entity.setName(newName);
