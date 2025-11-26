@@ -39,14 +39,19 @@ public class DecorationMenuHandler extends EntityMenuHandler<Decoration> {
 
     private void editDecorationData() {
         System.out.println("Editing data for decoration Id:" + entity.getId());
-        String name = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
-        String material = InputHandler.readString("Enter new material (current: " + entity.getMaterial() + ")");
-        double value = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
-        int roomId = InputHandler.readInt("Enter new room id (current: " + entity.getRoomId() + ")");
+        
+        String newName = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
+        String newMaterial = InputHandler.readString("Enter new material (current: " + entity.getMaterial() + ")");
+        double newValue = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
+        int newRoomId = InputHandler.readInt("Enter new room id (current: " + entity.getRoomId() + ")");
 
         try {
-            boolean success = decorationService.updateDecoration(name, material, value, roomId);
+            boolean success = decorationService.updateDecoration(entity.getId(), newName, newMaterial, newValue, newRoomId);
             if (success) {
+                entity.setName(newName);
+                entity.setMaterial(newMaterial);
+                entity.setValue(newValue);
+                entity.setRoomId(newRoomId);
                 System.out.println("Data updated successfully for decoration Id:" + entity.getId());
             } else {
                 System.out.println("Error updating data for decoration Id:" + entity.getId());

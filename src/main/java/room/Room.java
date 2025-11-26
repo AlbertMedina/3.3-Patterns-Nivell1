@@ -28,6 +28,10 @@ public class Room {
         this.escapeRoomId = escapeRoomId;
     }
 
+    public Room(String name, int difficultyValue, double price, int escapeRoomId) {
+        this(name, Difficulty.fromInt(difficultyValue), price, escapeRoomId);
+    }
+
     public int getId() {
         return id;
     }
@@ -37,18 +41,22 @@ public class Room {
     }
 
     public String getName() {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid name");
-        }
         return name;
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid name");
+        }
         this.name = name;
     }
 
     public Difficulty getDifficulty() {
         return difficulty;
+    }
+
+    public void setDifficulty(int difficultyValue) {
+        setDifficulty(Difficulty.fromInt(difficultyValue));
     }
 
     public void setDifficulty(Difficulty difficulty) {
@@ -79,6 +87,6 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Decoration { id: " + id + ", name: " + name + ", difficulty: " + difficulty + ", price: " + price + ", escape room id: " + escapeRoomId + " }";
+        return "Room { id: " + id + ", name: " + name + ", difficulty: " + difficulty + ", price: " + price + ", escape room id: " + escapeRoomId + " }";
     }
 }
