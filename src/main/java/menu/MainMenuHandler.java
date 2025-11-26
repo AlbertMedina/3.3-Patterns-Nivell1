@@ -86,4 +86,10 @@ public class MainMenuHandler extends AbstractMenuHandler {
         new EscapeRoomMenuHandler(select).run();
     }
 
+    public void deleteEscapeRoom() {
+        int id = InputHandler.readInt("Enter ID to delete: ");
+        boolean ok = escapeRoomService.deleteEscapeRoom(id);
+
+        System.out.println(ok ? "Escape Room removed!" : "Could not delete Escape Room");
+    }
 }
