@@ -69,6 +69,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Decoration { id: " + id + ", name: " + name + ", surnames: " + surnames + ", email: " + email + " }";
+        return "User { id: " + id + ", name: " + name + ", surnames: " + surnames + ", email: " + email + " }";
     }
 }
