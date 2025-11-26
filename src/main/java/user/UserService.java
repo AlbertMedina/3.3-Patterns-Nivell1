@@ -1,11 +1,5 @@
 package user;
 
-import room.Room;
-import room.RoomDaoImpl;
-import user.User;
-import user.UserDaoImpl;
-
-import java.time.LocalDate;
 import java.util.List;
 
 public class UserService {
