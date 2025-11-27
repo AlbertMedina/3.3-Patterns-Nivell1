@@ -12,8 +12,7 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
 
     private final EscapeRoomService escapeRoomService;
     private final RoomService roomService;
-
-
+    
     public EscapeRoomMenuHandler(EscapeRoom escapeRoom) {
         super(escapeRoom);
         escapeRoomService = new EscapeRoomService();

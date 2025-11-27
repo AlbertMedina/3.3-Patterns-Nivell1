@@ -6,7 +6,7 @@ import input.InputHandler;
 
 public class HintMenuHandler extends EntityMenuHandler<Hint> {
 
-    HintService hintService;
+    private final HintService hintService;
 
     public HintMenuHandler(Hint hint) {
         super(hint);

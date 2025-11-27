@@ -6,7 +6,7 @@ import input.InputHandler;
 
 public class DecorationMenuHandler extends EntityMenuHandler<Decoration> {
 
-    DecorationService decorationService;
+    private final DecorationService decorationService;
 
     public DecorationMenuHandler(Decoration decoration) {
         super(decoration);

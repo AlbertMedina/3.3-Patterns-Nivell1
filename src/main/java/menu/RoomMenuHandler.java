@@ -16,11 +16,11 @@ import java.util.List;
 
 public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
-    RoomService roomService;
-    HintService hintService;
-    DecorationService decorationService;
-    TicketService ticketService;
-    CertificationService certificationService;
+    private final RoomService roomService;
+    private final HintService hintService;
+    private final DecorationService decorationService;
+    private final TicketService ticketService;
+    private final CertificationService certificationService;
 
     public RoomMenuHandler(Room room) {
         super(room);
