@@ -88,7 +88,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             } else {
                 System.out.println("Error updating data for room Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error updating data for room Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -107,7 +107,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             } else {
                 System.out.println("Error adding hint to room Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error adding hint to room Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -137,7 +137,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             } else {
                 System.out.println("Error removing hint from room Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error removing hint from room Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -156,7 +156,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             } else {
                 System.out.println("Error adding decoration to room Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error adding decoration to room Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -185,7 +185,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             } else {
                 System.out.println("Error removing hint from room Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error removing hint from room Id:" + entity.getId() + ": " + e.getMessage());
         }
     }

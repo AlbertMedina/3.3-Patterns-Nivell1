@@ -39,7 +39,7 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
 
     private void editHintData() {
         System.out.println("Editing data for hint Id:" + entity.getId());
-        
+
         String newText = InputHandler.readString("Enter new text (current: " + entity.getText() + ")");
         String newTheme = InputHandler.readString("Enter new theme (current: " + entity.getTheme() + ")");
         double newValue = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
@@ -56,7 +56,7 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
             } else {
                 System.out.println("Error updating data for hint Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error updating data for hint Id:" + entity.getId() + ": " + e.getMessage());
         }
     }

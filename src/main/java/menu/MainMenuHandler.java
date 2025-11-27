@@ -65,7 +65,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
 
     private void manageEscapeRoom() {
 
-        List<EscapeRoom> rooms = escapeRoomService.listEscapeRooms();
+        List<EscapeRoom> rooms = escapeRoomService.getEscapeRooms();
         if (rooms.isEmpty()) {
             System.out.println("No Escape Rooms available");
             return;
@@ -77,7 +77,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
         }
 
         int id = InputHandler.readInt("Enter ID to manage: ");
-        EscapeRoom select = escapeRoomService.getEscapeRoom(id);
+        EscapeRoom select = escapeRoomService.getEscapeRoomById(id);
 
         if (select == null) {
             System.out.println("Escape room not found.");

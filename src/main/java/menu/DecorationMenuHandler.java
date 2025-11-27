@@ -39,7 +39,7 @@ public class DecorationMenuHandler extends EntityMenuHandler<Decoration> {
 
     private void editDecorationData() {
         System.out.println("Editing data for decoration Id:" + entity.getId());
-        
+
         String newName = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
         String newMaterial = InputHandler.readString("Enter new material (current: " + entity.getMaterial() + ")");
         double newValue = InputHandler.readDouble("Enter new value (current: " + entity.getValue() + ")");
@@ -56,7 +56,7 @@ public class DecorationMenuHandler extends EntityMenuHandler<Decoration> {
             } else {
                 System.out.println("Error updating data for decoration Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error updating data for decoration Id:" + entity.getId() + ": " + e.getMessage());
         }
     }

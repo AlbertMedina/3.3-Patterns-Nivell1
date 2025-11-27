@@ -81,7 +81,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
             } else {
                 System.out.println("Error updating data for user Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error updating data for user Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -99,7 +99,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
             } else {
                 System.out.println("Error giving reward to user Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error giving reward to user Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -117,7 +117,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
             } else {
                 System.out.println("Error giving certification to user Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error giving certification to user Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -134,7 +134,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
             } else {
                 System.out.println("Error purchasing ticket by user Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error purchasing ticket by user Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
@@ -150,7 +150,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
             } else {
                 System.out.println("Error updating subscription for user Id:" + entity.getId());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error updating subscription for user Id:" + entity.getId() + ": " + e.getMessage());
         }
     }
