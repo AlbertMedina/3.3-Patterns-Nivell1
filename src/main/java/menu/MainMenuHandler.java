@@ -1,9 +1,13 @@
 package menu;
 
+import Inventory.Inventory;
+import Inventory.InventoryService;
+import decoration.Decoration;
 import escapeRoom.EscapeRoom;
 import escapeRoom.EscapeRoomService;
+import hint.Hint;
 import input.InputHandler;
-import ticket.Ticket;
+import room.Room;
 import ticket.TicketService;
 import user.User;
 import user.UserService;
@@ -12,9 +16,10 @@ import java.util.List;
 
 public class MainMenuHandler extends AbstractMenuHandler {
 
-    private EscapeRoomService escapeRoomService = new EscapeRoomService();
-    private UserService userService = new UserService();
-    private TicketService ticketService = new TicketService();
+    private final EscapeRoomService escapeRoomService = new EscapeRoomService();
+    private final UserService userService = new UserService();
+    private final TicketService ticketService = new TicketService();
+    private final InventoryService inventoryService = new InventoryService();
 
 
     @Override
@@ -29,6 +34,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
         System.out.println("7. Check revenues");
         System.out.println("8. Send notification to subscribed users");
         System.out.println("9. Show full inventory");
+        System.out.println("10. Show inventory total value");
         System.out.println("0. Exit");
     }
 
@@ -54,12 +60,16 @@ public class MainMenuHandler extends AbstractMenuHandler {
                 removeUser();
                 break;
             case 7:
-                checkRevenues();
+                showTotalRevenue();
                 break;
             case 8:
                 sendNotification();
                 break;
             case 9:
+                showFullInventory();
+                break;
+            case 10:
+                getInventoryTotalValue();
                 break;
             case 0:
                 System.out.println("See you soon!");
@@ -121,7 +131,8 @@ public class MainMenuHandler extends AbstractMenuHandler {
 
         try {
             boolean create = userService.addUser(name, surname, email);
-            System.out.println(create ? "User created succesfully!" : "Could not create user");
+            System.out.println(create ? "User created successfully!" : "Failed to create user. Please try again.");
+
 
         } catch (Exception error) {
             System.out.println("Error creating user: " + error.getMessage());
@@ -161,46 +172,116 @@ public class MainMenuHandler extends AbstractMenuHandler {
         }
     }
 
-    private void checkRevenues() {
-        List<Ticket> tickets = ticketService.getTickets();
+    private void showTotalRevenue() {
+        try {
+            double totalRevenue = ticketService.getTicketsTotalRevenue();
 
-        if (tickets.isEmpty()) {
-            System.out.println("There are no tickets registered yet.");
-            return;
+            System.out.println("==== TOTAL REVENUES ====");
+            if (totalRevenue > 0) {
+                System.out.printf("Total income: %.2f €\n", totalRevenue);
+            } else {
+                System.out.println("No revenues found. There might be no tickets sold yet.");
+            }
+
+        } catch (Exception error) {
+
+            System.out.println("Error retrieving total revenue: " + error.getMessage());
         }
-
-        double total = tickets.stream()
-                .mapToDouble(Ticket::getPrice)
-                .sum();
-
-        System.out.println("==== TOTAL REVENUES ====");
-        System.out.printf("Total income: %.2f €\n", total);
-
     }
 
     private void sendNotification() {
-        List<User> users = userService.getUsers();
+        try {
+            List<User> users = userService.getUsers();
 
-        if (users.isEmpty()) {
-            System.out.println("There are no users in the system.");
-            return;
-        }
-
-        System.out.println("==== SENDING NOTIFICATIONS ====");
-
-        long count = 0;
-
-        for (User u : users) {
-            if (u.isSubscribed()) {
-                System.out.println("Notification sent to: " + u.getEmail());
-                count++;
+            if (users.isEmpty()) {
+                System.out.println("There are no users in the system.");
+                return;
             }
-        }
 
-        if (count == 0) {
-            System.out.println("No subscribed users to notify.");
-        } else {
-            System.out.println("Notifications sent to " + count + " user(s).");
+            String notification = InputHandler.readString("Enter the notification message: ");
+
+            if (notification.trim().isEmpty()) {
+                System.out.println("Error: Notification message cannot be empty.");
+                return;
+            }
+
+            userService.notifySubscribers(notification);
+            System.out.println("Notification sent to all subscribed users.");
+        } catch (Exception error) {
+            System.out.println("An error ocurred while sending the notification: " + error.getMessage());
+        }
+    }
+
+
+    private void showFullInventory() {
+        try {
+            Inventory inventory = inventoryService.getFullInventory();
+
+            boolean isEmpty = inventory.rooms().isEmpty() && inventory.decorations().isEmpty() && inventory.hints().isEmpty();
+
+            if (isEmpty) {
+                System.out.println("The inventory is completely empty.");
+                return;
+            }
+
+            System.out.println("==== FULL INVENTORY ====");
+
+            System.out.println("==== Rooms ====");
+            if (inventory.rooms().isEmpty()) {
+                System.out.println("No rooms available.");
+            } else {
+                for (Room room : inventory.rooms()) {
+                    System.out.println(room.getId() + " - " + room.getName() + " - Price: " + room.getPrice() + " €");
+                }
+            }
+
+            System.out.println("==== Decorations ====");
+            if (inventory.decorations().isEmpty()) {
+                System.out.println("No decorations available.");
+            } else {
+                for (Decoration decoration : inventory.decorations()) {
+                    System.out.println(decoration.getId() + " - " + decoration.getName() + " - Value: " + decoration.getValue() + " €");
+                }
+            }
+
+            System.out.println("==== Hints ====");
+            if (inventory.hints().isEmpty()) {
+                System.out.println("No hints available.");
+            } else {
+                for (Hint hint : inventory.hints()) {
+                    System.out.println(hint.getId() + " - " + hint.getText() + " - Value: " + hint.getValue() + " €");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error retrieving inventory: " + e.getMessage());
+        }
+    }
+
+    private void getInventoryTotalValue() {
+        try {
+            Inventory inventory = inventoryService.getFullInventory();
+
+            boolean isEmpty = inventory.rooms().isEmpty() && inventory.decorations().isEmpty() && inventory.hints().isEmpty();
+
+            if (isEmpty) {
+                System.out.println("The inventory is completely empty.");
+                return;
+            }
+
+            double totalInventoryValue = inventory.getInventoryValue();
+
+            System.out.println("==== INVENTORY TOTAL VALUE ====");
+            if (totalInventoryValue > 0) {
+                System.out.printf("Total inventory value: %.2f €\n", totalInventoryValue);
+            } else {
+                System.out.println("No value found. The inventory might be empty.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error retrieving inventory total value: " + e.getMessage());
         }
     }
 }
+
+
