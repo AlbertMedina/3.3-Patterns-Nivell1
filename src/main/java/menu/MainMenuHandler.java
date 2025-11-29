@@ -3,6 +3,8 @@ package menu;
 import escapeRoom.EscapeRoom;
 import escapeRoom.EscapeRoomService;
 import input.InputHandler;
+import ticket.Ticket;
+import ticket.TicketService;
 import user.User;
 import user.UserService;
 
@@ -12,6 +14,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
 
     private EscapeRoomService escapeRoomService = new EscapeRoomService();
     private UserService userService = new UserService();
+    private TicketService ticketService = new TicketService();
 
 
     @Override
@@ -25,8 +28,9 @@ public class MainMenuHandler extends AbstractMenuHandler {
         System.out.println("6. Remove user");
         System.out.println("7. Check revenues");
         System.out.println("8. Send notification to subscribed users");
+        System.out.println("9. Show full inventory");
         System.out.println("0. Exit");
-        return InputHandler.readInt("Choose what to do next (0-8)");
+        return InputHandler.readInt("Choose what to do next (0-9)");
     }
 
     @Override
@@ -51,8 +55,12 @@ public class MainMenuHandler extends AbstractMenuHandler {
                 removeUser();
                 break;
             case 7:
+                checkRevenues();
                 break;
             case 8:
+                sendNotification();
+                break;
+            case 9:
                 break;
             case 0:
                 System.out.println("See you soon!");
@@ -151,6 +159,49 @@ public class MainMenuHandler extends AbstractMenuHandler {
             System.out.println(ok ? "User removed!" : "Could not delete user");
         } catch (Exception error) {
             System.out.println("Error deleting user: " + error.getMessage());
+        }
+    }
+
+    private void checkRevenues() {
+        List<Ticket> tickets = ticketService.getTickets();
+
+        if (tickets.isEmpty()) {
+            System.out.println("There are no tickets registered yet.");
+            return;
+        }
+
+        double total = tickets.stream()
+                .mapToDouble(Ticket::getPrice)
+                .sum();
+
+        System.out.println("==== TOTAL REVENUES ====");
+        System.out.printf("Total income: %.2f €\n", total);
+
+    }
+
+    private void sendNotification() {
+        List<User> users = userService.getUsers();
+
+        if (users.isEmpty()) {
+            System.out.println("There are no users in the system.");
+            return;
+        }
+
+        System.out.println("==== SENDING NOTIFICATIONS ====");
+
+        long count = 0;
+
+        for (User u : users) {
+            if (u.isSubscribed()) {
+                System.out.println("Notification sent to: " + u.getEmail());
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("No subscribed users to notify.");
+        } else {
+            System.out.println("Notifications sent to " + count + " user(s).");
         }
     }
 }
