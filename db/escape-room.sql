@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `escape_db`.`room` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `difficulty` ENUM('EASY', 'MEDIUM', 'HARD') NOT NULL,
-  `price` DECIMAL(10,2) NOT NULL,
+  `price` DECIMAL(6,2) NOT NULL,
   `escape_room_id` INT NOT NULL,
   INDEX `room_escape_room_idx` (`escape_room_id` ASC) VISIBLE,
   CONSTRAINT `room_escape_room`
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `escape_db`.`decoration` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `material` VARCHAR(100) NOT NULL,
-  `value` DECIMAL(10,2) NOT NULL,
+  `value` DECIMAL(6,2) NOT NULL,
   `room_id` INT NOT NULL,
   INDEX `decoration_room_idx` (`room_id` ASC) VISIBLE,
   CONSTRAINT `decoration_room`
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `escape_db`.`hint` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `text` VARCHAR(400) NOT NULL,
   `theme` VARCHAR(100) NOT NULL,
-  `value` DECIMAL(10,2) NOT NULL,
+  `value` DECIMAL(6,2) NOT NULL,
   `room_id` INT NOT NULL,
   INDEX `hint_room_idx` (`room_id` ASC) VISIBLE,
   CONSTRAINT `hint_room`
@@ -108,20 +108,20 @@ DROP TABLE IF EXISTS `escape_db`.`ticket` ;
 CREATE TABLE IF NOT EXISTS `escape_db`.`ticket` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `date` DATE NOT NULL,
-  `price` DECIMAL(10,2) NOT NULL,
-  `room_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `price` DECIMAL(6,2) NOT NULL,
+  `room_id` INT,
+  `user_id` INT,
   INDEX `ticket_room_idx` (`room_id` ASC) VISIBLE,
   INDEX `ticket_user_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `ticket_room`
     FOREIGN KEY (`room_id`)
     REFERENCES `escape_db`.`room` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `ticket_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `escape_db`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -155,14 +155,14 @@ CREATE TABLE IF NOT EXISTS `escape_db`.`certification` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `date` DATE NOT NULL,
-  `room_id` INT NOT NULL,
+  `room_id` INT,
   `user_id` INT NOT NULL,
   INDEX `certification_room_idx` (`room_id` ASC) VISIBLE,
   INDEX `certification_user_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `certification_room`
     FOREIGN KEY (`room_id`)
     REFERENCES `escape_db`.`room` (`id`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `certification_user`
     FOREIGN KEY (`user_id`)
