@@ -9,10 +9,13 @@ import reward.RewardService;
 import user.User;
 import user.UserDaoImpl;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -39,6 +42,8 @@ public class RewardServiceTest {
         userDaoField.set(rewardService, userDaoMock);
 
     }
+
+
 
     @Test
     public void addRewardTest() {
@@ -85,5 +90,45 @@ public class RewardServiceTest {
         verify(rewardDaoMock, times(1)).delete(5);
 
     }
+
+    @Test
+    void getRewardByIdTest() {
+        Reward reward = new Reward("Medal of Honor", "Description", LocalDate.now(), 3);
+        reward.setId(99);
+
+        when(rewardDaoMock.findById(99)).thenReturn(reward);
+
+        Reward result = rewardService.getRewardById(99);
+
+        assertNotNull(result);
+        assertEquals(99, result.getId());
+        verify(rewardDaoMock, times(1)).findById(99);
+    }
+
+    @Test
+    void getAllRewardsTest() {
+        List<Reward> mockList = Arrays.asList(
+                new Reward("Reward1", "Description1", LocalDate.now(), 1),
+                new Reward("Reward2", "Description2", LocalDate.now(), 2)
+        );
+
+        when(rewardDaoMock.findAll()).thenReturn(mockList);
+        List<Reward> result = rewardService.getRewards();
+
+        assertEquals(2, result.size());
+        verify(rewardDaoMock,times(1)).findAll();
+    }
+
+    /**void getRewardsByUserIdTest() {
+        Reward mockReward= new Reward("Reward2", "Desc", LocalDate.now(), 10);
+
+        when(rewardDaoMock.findById(10)).thenReturn(mockReward);
+        List<Reward> result = rewardService.getRewardsByUser(10);
+
+        assertEquals(1, result.size());
+        verify(rewardDaoMock, times(1)).findAllByUser(10);
+
+    }**/
+
 
 }
