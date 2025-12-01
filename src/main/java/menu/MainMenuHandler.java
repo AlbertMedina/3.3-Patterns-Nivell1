@@ -51,7 +51,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
         System.out.println("6. Add user");
         System.out.println("7. Manage user");
         System.out.println("8. Remove user");
-        System.out.println("9. Check revenues");
+        System.out.println("9. Check total revenue");
         System.out.println("10. Send notification to subscribed users");
         System.out.println("11. Show full inventory");
         System.out.println("12. Show inventory total value");
@@ -163,7 +163,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
     }
 
     private void removeUser() {
-        int id = InputHandler.readInt("Enter ID user to delete: ");
+        int id = InputHandler.readInt("Enter ID user to delete");
 
         try {
             boolean success = userService.deleteUser(id);
@@ -185,7 +185,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
     }
 
     private void sendNotification() {
-        String notification = InputHandler.readString("Enter the notification message: ");
+        String notification = InputHandler.readString("Enter the notification message");
         userService.notifySubscribers(notification);
         System.out.println("Notification sent to all subscribed users.");
     }
