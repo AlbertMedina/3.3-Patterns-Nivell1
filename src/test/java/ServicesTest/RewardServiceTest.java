@@ -55,7 +55,7 @@ public class RewardServiceTest {
 
 
 
-    @Testgi
+    @Test
     public void updateRewardTest() {
         Reward existing = new Reward("Old name", "Old description", LocalDate.now(), 1);
         existing.setId(10);
