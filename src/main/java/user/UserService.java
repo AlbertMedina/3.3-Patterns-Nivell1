@@ -32,8 +32,8 @@ public class UserService {
         }
 
         user.setName(newName);
-        user.setName(newSurnames);
-        user.setName(newEmail);
+        user.setSurnames(newSurnames);
+        user.setEmail(newEmail);
 
         return userDao.update(user);
     }

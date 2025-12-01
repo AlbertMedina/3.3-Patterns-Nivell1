@@ -26,7 +26,7 @@ public class InputHandler {
             System.out.print(message + ": ");
             try {
                 String input = SCANNER.nextLine();
-                if (input.isEmpty()) {
+                if (input.trim().isEmpty()) {
                     throw new Exception("Format error");
                 }
                 return input.trim();
