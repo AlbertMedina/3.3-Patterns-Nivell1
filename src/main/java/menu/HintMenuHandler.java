@@ -31,7 +31,7 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
     }
 
     private void editHintData() {
-        System.out.println("Editing data for hint Id:" + entity.getId());
+        System.out.println("Editing data for hint #" + entity.getId());
 
         String newText = InputHandler.readString("Enter new text (current: " + entity.getText() + ")");
         String newTheme = InputHandler.readString("Enter new theme (current: " + entity.getTheme() + ")");
@@ -45,12 +45,12 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
                 entity.setTheme(newTheme);
                 entity.setValue(newValue);
                 entity.setRoomId(newRoomId);
-                System.out.println("Data updated successfully for hint Id:" + entity.getId());
+                System.out.println("Data updated successfully for hint #" + entity.getId());
             } else {
-                System.out.println("Error updating data for hint Id:" + entity.getId());
+                System.out.println("Error updating data for hint #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error updating data for hint Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error updating data for hint #" + entity.getId() + ": " + e.getMessage());
         }
     }
 }

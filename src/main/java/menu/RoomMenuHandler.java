@@ -69,7 +69,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
     }
 
     private void editRoomData() {
-        System.out.println("Editing data for room Id:" + entity.getId());
+        System.out.println("Editing data for room #" + entity.getId());
 
         String newName = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
         int newDifficultyValue = InputHandler.readInt("Enter new difficulty (1-3) (current: " + entity.getDifficulty().toString().toLowerCase() + ")");
@@ -83,12 +83,12 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
                 entity.setDifficulty(newDifficultyValue);
                 entity.setPrice(newPrice);
                 entity.setEscapeRoomId(newEscapeRoomId);
-                System.out.println("Data updated successfully for room Id:" + entity.getId());
+                System.out.println("Data updated successfully for room #" + entity.getId());
             } else {
-                System.out.println("Error updating data for room Id:" + entity.getId());
+                System.out.println("Error updating data for room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error updating data for room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error updating data for room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -98,13 +98,13 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (hints.isEmpty()) {
             System.out.println("There are no hints in this room");
         } else {
-            System.out.println("Hints in room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Hints in room #" + entity.getId() + ":");
             hints.forEach(System.out::println);
         }
     }
 
     private void addHint() {
-        System.out.println("Adding new hint to room Id:" + entity.getId());
+        System.out.println("Adding new hint to room #" + entity.getId());
 
         String text = InputHandler.readString("Enter hint text");
         String theme = InputHandler.readString("Enter hint theme");
@@ -113,12 +113,12 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         try {
             boolean success = hintService.addHint(text, theme, value, entity.getId());
             if (success) {
-                System.out.println("Hint added successfully to room Id:" + entity.getId());
+                System.out.println("Hint added successfully to room #" + entity.getId());
             } else {
-                System.out.println("Error adding hint to room Id:" + entity.getId());
+                System.out.println("Error adding hint to room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error adding hint to room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error adding hint to room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -131,24 +131,24 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             HintMenuHandler hintMenu = new HintMenuHandler(hint, hintService);
             hintMenu.run();
         } else {
-            System.out.println("Hint Id:" + hintId + " could not be found");
+            System.out.println("Hint #" + hintId + " could not be found");
         }
     }
 
     private void removeHint() {
-        System.out.println("Removing hint from room Id:" + entity.getId());
+        System.out.println("Removing hint from room #" + entity.getId());
 
         int hintId = InputHandler.readInt("Enter hint Id");
 
         try {
             boolean success = hintService.removeHint(hintId);
             if (success) {
-                System.out.println("Hint removed successfully from room Id:" + entity.getId());
+                System.out.println("Hint removed successfully from room #" + entity.getId());
             } else {
-                System.out.println("Error removing hint from room Id:" + entity.getId());
+                System.out.println("Error removing hint from room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error removing hint from room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error removing hint from room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -158,13 +158,13 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (decorations.isEmpty()) {
             System.out.println("There are no decorations in this room");
         } else {
-            System.out.println("Decorations in room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Decorations in room #" + entity.getId() + ":");
             decorations.forEach(System.out::println);
         }
     }
 
     private void addDecoration() {
-        System.out.println("Adding new decoration to room Id:" + entity.getId());
+        System.out.println("Adding new decoration to room #" + entity.getId());
 
         String name = InputHandler.readString("Enter decoration name");
         String material = InputHandler.readString("Enter decoration material");
@@ -173,12 +173,12 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         try {
             boolean success = decorationService.addDecoration(name, material, value, entity.getId());
             if (success) {
-                System.out.println("Decoration added successfully to room Id:" + entity.getId());
+                System.out.println("Decoration added successfully to room #" + entity.getId());
             } else {
-                System.out.println("Error adding decoration to room Id:" + entity.getId());
+                System.out.println("Error adding decoration to room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error adding decoration to room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error adding decoration to room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -190,24 +190,24 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
             DecorationMenuHandler decorationMenu = new DecorationMenuHandler(decoration, decorationService);
             decorationMenu.run();
         } else {
-            System.out.println("Decoration Id:" + decorationId + " could not be found");
+            System.out.println("Decoration #" + decorationId + " could not be found");
         }
     }
 
     private void removeDecoration() {
-        System.out.println("Removing decoration from room Id:" + entity.getId());
+        System.out.println("Removing decoration from room #" + entity.getId());
 
         int decorationId = InputHandler.readInt("Enter decoration Id");
 
         try {
             boolean success = decorationService.removeDecoration(decorationId);
             if (success) {
-                System.out.println("Decoration removed successfully from room Id:" + entity.getId());
+                System.out.println("Decoration removed successfully from room #" + entity.getId());
             } else {
-                System.out.println("Error removing hint from room Id:" + entity.getId());
+                System.out.println("Error removing hint from room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error removing hint from room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error removing hint from room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -217,7 +217,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (tickets.isEmpty()) {
             System.out.println("There are no tickets sold for this room");
         } else {
-            System.out.println("Tickets sold for room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Tickets sold for room #" + entity.getId() + ":");
             tickets.forEach(System.out::println);
         }
     }
@@ -228,7 +228,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (certifications.isEmpty()) {
             System.out.println("There are no certifications granted for this room");
         } else {
-            System.out.println("Certifications granted for room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Certifications granted for room #" + entity.getId() + ":");
             certifications.forEach(System.out::println);
         }
     }

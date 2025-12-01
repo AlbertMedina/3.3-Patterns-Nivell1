@@ -57,7 +57,7 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
     }
 
     private void editEscapeRoomData() {
-        System.out.println("Editing data for escape room Id:" + entity.getId());
+        System.out.println("Editing data for escape room #" + entity.getId());
 
         String newName = InputHandler.readString("Enter new name (current: " + entity.getName() + ")");
 
@@ -66,17 +66,17 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
             System.out.println(success ? "Escape Room Updated" : "Could not update Escape Room");
             if (success) {
                 entity.setName(newName);
-                System.out.println("Data updated successfully for escape room Id:" + entity.getId());
+                System.out.println("Data updated successfully for escape room #" + entity.getId());
             } else {
-                System.out.println("Error updating data for escape room Id:" + entity.getId());
+                System.out.println("Error updating data for escape room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error updating data for escape room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error updating data for escape room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
     private void addRoom() {
-        System.out.println("Adding new room to escape room Id:" + entity.getId());
+        System.out.println("Adding new room to escape room #" + entity.getId());
 
         String name = InputHandler.readString("Enter room name");
         int difficultyValue = InputHandler.readInt("Enter room difficulty (1-3)");
@@ -85,12 +85,12 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
         try {
             boolean success = roomService.addRoom(name, difficultyValue, price, entity.getId());
             if (success) {
-                System.out.println("Room added successfully to escape room Id:" + entity.getId());
+                System.out.println("Room added successfully to escape room #" + entity.getId());
             } else {
-                System.out.println("Error adding room to escape room Id:" + entity.getId());
+                System.out.println("Error adding room to escape room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error adding room to escape room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error adding room to escape room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -103,24 +103,24 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
             RoomMenuHandler roomMenu = new RoomMenuHandler(room, roomService, hintService, decorationService, ticketService, certificationService);
             roomMenu.run();
         } else {
-            System.out.println("Room Id:" + roomId + " could not be found");
+            System.out.println("Room #" + roomId + " could not be found");
         }
     }
 
     private void removeRoom() {
-        System.out.println("Removing room from escape room Id:" + entity.getId());
+        System.out.println("Removing room from escape room #" + entity.getId());
 
         int roomId = InputHandler.readInt("Enter room Id");
 
         try {
             boolean success = roomService.removeRoom(roomId);
             if (success) {
-                System.out.println("Room removed successfully from escape room Id:" + entity.getId());
+                System.out.println("Room removed successfully from escape room #" + entity.getId());
             } else {
-                System.out.println("Error removing room from escape room Id:" + entity.getId());
+                System.out.println("Error removing room from escape room #" + entity.getId());
             }
         } catch (Exception e) {
-            System.out.println("Error removing room from escape room Id:" + entity.getId() + ": " + e.getMessage());
+            System.out.println("Error removing room from escape room #" + entity.getId() + ": " + e.getMessage());
         }
     }
 
@@ -130,7 +130,7 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
         if (rooms.isEmpty()) {
             System.out.println("There are no rooms in this escape room");
         } else {
-            System.out.println("Rooms in escape room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Rooms in escape room #" + entity.getId() + " (" + entity.getName() + "):");
             rooms.forEach(System.out::println);
         }
     }
