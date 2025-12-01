@@ -33,7 +33,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
 
     @Override
     protected void showMenuOptions() {
-        System.out.println("ROOM ID:" + entity.getId() + " (" + entity.getName() + ")" + " MENU");
+        System.out.println("==== ROOM " + entity.getId() + " (" + entity.getName() + ")" + " MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Edit room data");
         System.out.println("2. Show hints");
@@ -98,7 +98,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (hints.isEmpty()) {
             System.out.println("There are no hints in this room");
         } else {
-            System.out.println("📌 Hints in room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Hints in room Id:" + entity.getId() + " (" + entity.getName() + "):");
             hints.forEach(System.out::println);
         }
     }
@@ -158,7 +158,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (decorations.isEmpty()) {
             System.out.println("There are no decorations in this room");
         } else {
-            System.out.println("📌 Decorations in room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Decorations in room Id:" + entity.getId() + " (" + entity.getName() + "):");
             decorations.forEach(System.out::println);
         }
     }
@@ -217,7 +217,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (tickets.isEmpty()) {
             System.out.println("There are no tickets sold for this room");
         } else {
-            System.out.println("📌 Tickets sold for room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Tickets sold for room Id:" + entity.getId() + " (" + entity.getName() + "):");
             tickets.forEach(System.out::println);
         }
     }
@@ -228,7 +228,7 @@ public class RoomMenuHandler extends EntityMenuHandler<Room> {
         if (certifications.isEmpty()) {
             System.out.println("There are no certifications granted for this room");
         } else {
-            System.out.println("📌 Certifications granted for room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Certifications granted for room Id:" + entity.getId() + " (" + entity.getName() + "):");
             certifications.forEach(System.out::println);
         }
     }

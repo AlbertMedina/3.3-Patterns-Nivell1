@@ -42,6 +42,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
 
     @Override
     protected void showMenuOptions() {
+        System.out.println("==== MAIN MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Show escape rooms");
         System.out.println("2. Add escape room");
@@ -84,7 +85,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
         if (rooms.isEmpty()) {
             System.out.println("There ara no escape rooms");
         } else {
-            System.out.println("==== Escape Rooms ====");
+            System.out.println("== Escape Rooms ==");
             rooms.forEach(System.out::println);
         }
     }
@@ -130,13 +131,13 @@ public class MainMenuHandler extends AbstractMenuHandler {
         if (users.isEmpty()) {
             System.out.println("There are no users");
         } else {
-            System.out.println("==== USERS ====");
+            System.out.println("== USERS ==");
             users.forEach(System.out::println);
         }
     }
 
     private void addUser() {
-        System.out.println("==== ADD NEW USER ====");
+        System.out.println("== ADD NEW USER ==");
 
         String name = InputHandler.readString("Enter first name");
         String surname = InputHandler.readString("Enter surname");
@@ -178,7 +179,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
         double totalRevenue = ticketService.getTicketsTotalRevenue();
 
         if (totalRevenue > 0) {
-            System.out.println("==== TOTAL REVENUE ====");
+            System.out.println("== TOTAL REVENUE ==");
             System.out.printf("Total income: %.2f €\n", totalRevenue);
         } else {
             System.out.println("No revenues found. There might be no tickets sold yet");
@@ -194,23 +195,23 @@ public class MainMenuHandler extends AbstractMenuHandler {
     private void showFullInventory() {
         Inventory inventory = inventoryService.getFullInventory();
 
-        System.out.println("==== FULL INVENTORY ====");
+        System.out.println("== FULL INVENTORY ==");
 
-        System.out.println("==== Rooms ====");
+        System.out.println("== Rooms ==");
         if (inventory.rooms().isEmpty()) {
             System.out.println("No rooms available.");
         } else {
             inventory.rooms().forEach(System.out::println);
         }
 
-        System.out.println("==== Decorations ====");
+        System.out.println("== Decorations ==");
         if (inventory.decorations().isEmpty()) {
             System.out.println("No decorations available.");
         } else {
             inventory.decorations().forEach(System.out::println);
         }
 
-        System.out.println("==== Hints ====");
+        System.out.println("== Hints ==");
         if (inventory.hints().isEmpty()) {
             System.out.println("No hints available.");
         } else {
@@ -223,7 +224,7 @@ public class MainMenuHandler extends AbstractMenuHandler {
 
         double totalInventoryValue = inventory.getInventoryValue();
 
-        System.out.println("==== INVENTORY TOTAL VALUE ====");
+        System.out.println("== INVENTORY TOTAL VALUE ==");
         System.out.printf("Total inventory value: %.2f €\n", totalInventoryValue);
     }
 }

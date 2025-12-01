@@ -15,7 +15,7 @@ public class HintMenuHandler extends EntityMenuHandler<Hint> {
 
     @Override
     protected void showMenuOptions() {
-        System.out.println("HINT ID:" + entity.getId() + " MENU");
+        System.out.println("==== HINT " + entity.getId() + " MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Edit hint data");
         System.out.println("0. Back");

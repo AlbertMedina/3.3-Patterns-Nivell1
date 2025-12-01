@@ -33,12 +33,13 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
 
     @Override
     protected void showMenuOptions() {
+        System.out.println("==== ESCAPE ROOM " + entity.getId() + " (" + entity.getName() + ")" + " MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Edit escape room data");
-        System.out.println("2. Add room");
-        System.out.println("3. Manage room");
-        System.out.println("4. Remove room");
-        System.out.println("5. Show all Rooms");
+        System.out.println("2. Show rooms");
+        System.out.println("3. Add room");
+        System.out.println("4. Manage room");
+        System.out.println("5. Remove room");
         System.out.println("0. Back");
     }
 
@@ -46,10 +47,10 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
     protected void handleOption(int option) {
         switch (option) {
             case 1 -> editEscapeRoomData();
-            case 2 -> addRoom();
-            case 3 -> manageRoom();
-            case 4 -> removeRoom();
-            case 5 -> showAllRooms();
+            case 2 -> showAllRooms();
+            case 3 -> addRoom();
+            case 4 -> manageRoom();
+            case 5 -> removeRoom();
             case 0 -> System.out.println("Going back to main menu...");
             default -> System.out.println("Invalid option (" + option + ").");
         }
@@ -129,7 +130,7 @@ public class EscapeRoomMenuHandler extends EntityMenuHandler<EscapeRoom> {
         if (rooms.isEmpty()) {
             System.out.println("There are no rooms in this escape room");
         } else {
-            System.out.println("📌 Rooms in escape room Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Rooms in escape room Id:" + entity.getId() + " (" + entity.getName() + "):");
             rooms.forEach(System.out::println);
         }
     }

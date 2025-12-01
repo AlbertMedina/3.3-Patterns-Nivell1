@@ -30,7 +30,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
 
     @Override
     protected void showMenuOptions() {
-        System.out.println("USER ID:" + entity.getId() + " (" + entity.getName() + " " + entity.getSurnames() + ")" + " MENU");
+        System.out.println("==== USER " + entity.getId() + " (" + entity.getName() + " " + entity.getSurnames() + ")" + " MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Edit user data");
         System.out.println("2. " + (entity.isSubscribed() ? "Cancel subscription" : "Subscribe"));
@@ -156,7 +156,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
         if (tickets.isEmpty()) {
             System.out.println("There are no tickets purchased by this user");
         } else {
-            System.out.println("📌 Tickets purchased by user Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Tickets purchased by user Id:" + entity.getId() + " (" + entity.getName() + "):");
             tickets.forEach(System.out::println);
         }
     }
@@ -167,7 +167,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
         if (certifications.isEmpty()) {
             System.out.println("There are no certifications granted to this user");
         } else {
-            System.out.println("📌 Certifications granted to user Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Certifications granted to user Id:" + entity.getId() + " (" + entity.getName() + "):");
             certifications.forEach(System.out::println);
         }
     }
@@ -178,7 +178,7 @@ public class UserMenuHandler extends EntityMenuHandler<User> {
         if (rewards.isEmpty()) {
             System.out.println("There are no rewards granted to this user");
         } else {
-            System.out.println("📌 Rewards granted to user Id:" + entity.getId() + " (" + entity.getName() + "):");
+            System.out.println("Rewards granted to user Id:" + entity.getId() + " (" + entity.getName() + "):");
             rewards.forEach(System.out::println);
         }
     }

@@ -15,7 +15,7 @@ public class DecorationMenuHandler extends EntityMenuHandler<Decoration> {
 
     @Override
     protected void showMenuOptions() {
-        System.out.println("DECORATION ID:" + entity.getId() + " MENU");
+        System.out.println("==== DECORATION " + entity.getId() + " (" + entity.getName() + ")" + " MENU ====");
         System.out.println("We can do the following:");
         System.out.println("1. Edit decoration data");
         System.out.println("0. Back");

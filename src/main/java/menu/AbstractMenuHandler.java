@@ -9,7 +9,9 @@ public abstract class AbstractMenuHandler {
         do {
             showMenuOptions();
             option = InputHandler.readInt("Choose what to do next");
+            System.out.println();
             handleOption(option);
+            System.out.println();
         } while (option != 0);
     }
 
