@@ -24,11 +24,19 @@ public class TicketService {
         return ticketDao.findAll();
     }
 
+    public List<Ticket> getTicketsByRoom(int roomId) {
+        return ticketDao.findAllByRoom(roomId);
+    }
+
+    public List<Ticket> getTicketsByUser(int userId) {
+        return ticketDao.findAllByUser(userId);
+    }
+
     public Ticket getTicketById(int id) {
         return ticketDao.findById(id);
     }
 
-    public boolean addTicket(LocalDate date, double price, int roomId, int userId) {
+    public boolean addTicket(LocalDate date, int roomId, int userId) {
         Room room = roomDao.findById(roomId);
         if (room == null) {
             throw new IllegalArgumentException("Room with id " + roomId + " does not exist");
@@ -39,7 +47,7 @@ public class TicketService {
             throw new IllegalArgumentException("User with id " + userId + " does not exist");
         }
 
-        Ticket ticket = new Ticket(date, price, roomId, userId);
+        Ticket ticket = new Ticket(date, room.getPrice(), roomId, userId);
         return ticketDao.insert(ticket);
     }
 
@@ -69,5 +77,9 @@ public class TicketService {
 
     public boolean deleteTicket(int id) {
         return ticketDao.delete(id);
+    }
+
+    public double getTicketsTotalRevenue() {
+        return getTickets().stream().mapToDouble(Ticket::getPrice).sum();
     }
 }
