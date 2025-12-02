@@ -66,20 +66,33 @@ mvn clean install
 ##📦Project Structure
 
 src/main/java
-├── escapeRoom          → Escape room domain + DAO + service
+├── escapeRoom  → Escape room domain + DAO + service
+
 ├── room                → Rooms, difficulties, DAO, service
+
 ├── user                → Users + Subscriber (Observer)
+
 ├── hint                → Hint entities, DAO, service
+
 ├── decoration          → Decorations, DAO, service
+
 ├── ticket              → Tickets, DAO, service
+
 ├── reward              → Rewards, DAO, service
+
 ├── certification       → Certifications, DAO, service
+
 ├── Inventory           → Aggregated inventory logic
+
 ├── menu                → Interactive console menus (Template Method)
+
 ├── input               → Input handling utilities
+
 ├── db                  → JDBC connection (Singleton) + Generic DAO
+
 └── exceptions          → Domain + validation exceptions
 
 src/test/java
 ├── DaoTests            → CRUD tests for DAO implementations
+
 └── ServicesTest        → Mockito tests for business logic
